@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_sell_gird_view_vertical_spacing">2dp</dimen>
+    <dimen name="activity_sell_gird_view_horizontal_spacing">2dp</dimen>
+    <dimen name="activity_sell_gird_view_margin_top">2dp</dimen>
+</resources>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AnimalList</string>
+    <string name="animal_title">animal_title</string>
+    <string name="love">Love</string>
+    <string name="back_to_list">Back to List</string>
+    <string name="love_button">Love</string>
+</resources>
