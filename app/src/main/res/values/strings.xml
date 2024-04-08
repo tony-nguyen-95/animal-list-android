@@ -4,4 +4,11 @@
     <string name="love">Love</string>
     <string name="back_to_list">Back to List</string>
     <string name="love_button">Love</string>
+    <string name="show_custom_toast">Show Custom Toast</string>
+    <string name="heading">Test Fragment</string>
+    <string name="fragment1_button">Show Fragment 1</string>
+    <string name="fragment2_button">Show Fragment2</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment1_text">First Fragment</string>
 </resources>

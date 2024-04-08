@@ -1,32 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" >
+    android:background="#168BC34A"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
-    <!-- Title Image view at the top -->
-    <ImageView
-        android:id="@+id/imageView"
+    <!-- Heading of the activity -->
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_title_animal"
-        android:scaleType="fitXY"
-        android:layout_marginTop="10dp"
-        android:contentDescription="@string/animal_title" />
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/heading"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_green_light"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
-    <!-- Grid view below the image view, taking full width and centered -->
-    <GridView
-        android:id="@+id/grid_animals"
-        android:layout_width="match_parent"
+    <!-- Button to display first fragment -->
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imageView"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:gravity="center"
-        android:numColumns="3"
-        android:horizontalSpacing="12dp"
-        android:verticalSpacing="16dp"/>
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="#4CAF50"
+        android:fontFamily="@font/roboto"
+        android:onClick="selectFragment"
+        android:text="@string/fragment1_button"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
-</RelativeLayout>
+    <!-- Button to display second fragment -->
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="#4CAF50"
+        android:fontFamily="@font/roboto"
+        android:onClick="selectFragment"
+        android:text="@string/fragment2_button"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- Adding Fragment element in the activity -->
+    <FrameLayout
+        android:id="@+id/fragment_section"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="10dp" />
+
+</LinearLayout>
