@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <!-- Other menu items -->
+    </group>
+
+    <item
+        android:id="@+id/nav_custom_view"
+        android:title="Custom View">
+        <menu>
+            <item
+                android:id="@+id/menu_recycler_view"
+                android:title="RecyclerView" />
+        </menu>
+    </item>
+</menu>
