@@ -1,75 +1,58 @@
 package com.example.animalList;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.GridView;
-import android.widget.TextView;
-import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
-import com.example.animalList.model.Animal;
-import com.example.animalList.adapter.AnimalAdapter;
+import com.example.animalList.adapter.ExamAdapter;
+import com.example.animalList.model.Exam;
+
 import java.util.List;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity {
-    private static final int REQUEST_CODE_DETAIL_ACTIVITY = 1;
-    private List<Animal> mAnimalList= new ArrayList<>();
-    private AnimalAdapter mAdapter;
+public class MainActivity extends AppCompatActivity
+{
+    ExamAdapter adapter;
+    RecyclerView recyclerView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Get references to the buttons
-        Button button1 = findViewById(R.id.button1);
-        Button button2 = findViewById(R.id.button2);
+        Toolbar toolbar= (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
 
-        // Set OnClickListener for button1
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Call the selectFragment() function with the clicked view
-                selectFragment(v);
-            }
-        });
+        List<Exam> list = new ArrayList<>();
+        list = getData();
 
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectFragment(v);
-            }
-        });
+        recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+        adapter = new ExamAdapter(list, getApplication());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    public void selectFragment(View view) {
-        // creating object for Fragment
-        Fragment fr;
 
-        if(view == findViewById(R.id.button1)) {
-            fr = new FirstFragment();
-        }
-        else {
-            fr = new SecondFragment();
-        }
+    // Sample data for RecyclerView
+    private List<Exam> getData()
+    {
+        List<Exam> list = new ArrayList<>();
+        list.add(new Exam("First Exam",
+                "May 23, 2015",
+                "Best Of Luck"));
+        list.add(new Exam("Second Exam",
+                "June 09, 2015",
+                "b of l"));
+        list.add(new Exam("My Test Exam",
+                "April 27, 2017",
+                "This is testing exam .."));
 
-        FragmentManager fm = getFragmentManager();
-
-        // fragments while activity is running
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_section, fr);
-
-
-        fragmentTransaction.commit();
+        return list;
     }
 
 
