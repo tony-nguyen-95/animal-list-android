@@ -24,21 +24,19 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        drawerLayout = findViewById(R.id.my_drawer_layout);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.nav_open, R.string.nav_close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
         // calling this activity's function to
         // use ActionBar utility methods
         ActionBar actionBar = getSupportActionBar();
 
         // providing title for the ActionBar
-        actionBar.setTitle("  GfG | Action Bar");
+        actionBar.setTitle("Navigation");
 
-        // providing subtitle for the ActionBar
-        actionBar.setSubtitle("   Design a custom Action Bar");
 
-        // adding icon in the ActionBar
-//        actionBar.setIcon(R.drawable.app_logo);
-
-        // methods to display the icon in the ActionBar
-        actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
     }
 
