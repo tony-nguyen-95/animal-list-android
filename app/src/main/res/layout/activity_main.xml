@@ -17,6 +17,16 @@
             android:layout_height="50dp"
             android:background="@color/lavender" />
 
+        <ImageView
+            android:id="@+id/animalImageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_below="@id/toolbar"
+            android:adjustViewBounds="true"
+            android:layout_marginTop="56dp"
+            android:scaleType="centerCrop" />
+
         <!-- Your content layout here -->
 
     </RelativeLayout>
