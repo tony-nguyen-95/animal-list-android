@@ -1,17 +1,42 @@
 <!-- custom_navigation_header.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/white">
 
-    <TextView
+    <ImageView
+        android:id="@+id/animalImageViewDrawer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Header Title"
-        android:textSize="18sp"
-        android:textColor="@android:color/black" />
+        android:src="@drawable/ic_title_animal"
+        android:layout_alignParentStart="true"
+        android:scaleType="fitXY"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/animal_title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:layout_below="@id/animalImageViewDrawer"
+        android:background="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"/>
+
+        </LinearLayout>
+    </ScrollView>
 
     <!-- Add any other views you want in the header -->
-</LinearLayout>
+</RelativeLayout>
