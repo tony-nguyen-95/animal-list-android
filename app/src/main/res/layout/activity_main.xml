@@ -21,11 +21,11 @@
             android:id="@+id/animalImageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_below="@id/toolbar"
-            android:adjustViewBounds="true"
-            android:layout_marginTop="56dp"
-            android:scaleType="centerCrop" />
+            android:src="@drawable/ic_title_animal"
+            android:scaleType="fitXY"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/animal_title" />
 
         <!-- Your content layout here -->
 
