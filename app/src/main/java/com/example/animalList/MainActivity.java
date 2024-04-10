@@ -10,6 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.animalList.model.KindOfAnimal;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -38,6 +44,19 @@ public class MainActivity extends AppCompatActivity {
 
 
         actionBar.setDisplayShowHomeEnabled(true);
+    }
+
+
+
+    // Sample data for RecyclerView
+    private List<KindOfAnimal> getDataKindOfAnimal()
+    {
+        List<KindOfAnimal> list = new ArrayList<>();
+        list.add(new KindOfAnimal("Seas", R.drawable.animals_birds));
+        list.add(new KindOfAnimal("Mammals", R.drawable.animals_birds));
+        list.add(new KindOfAnimal("Birds", R.drawable.animals_birds));
+
+        return list;
     }
 
     @Override

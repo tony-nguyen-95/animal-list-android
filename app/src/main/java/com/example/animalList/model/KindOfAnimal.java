@@ -11,11 +11,11 @@ public class KindOfAnimal {
     public int photo;
     public ArrayList<Animal> listRepresent;
 
-    public KindOfAnimal(String name, int photo,ArrayList<Animal> listRepresent)
+    public KindOfAnimal(String name, int photo)
         {
             this.name = name;
             this.photo = photo;
-            this.listRepresent = listRepresent;
+//            this.listRepresent = listRepresent;
         }
 
 
