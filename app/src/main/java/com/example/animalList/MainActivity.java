@@ -1,7 +1,9 @@
 package com.example.animalList;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,8 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.animalList.adapter.KindOfAnimalAdapter;
 import com.example.animalList.model.KindOfAnimal;
 
 import java.util.ArrayList;
@@ -42,8 +46,18 @@ public class MainActivity extends AppCompatActivity {
         // providing title for the ActionBar
         actionBar.setTitle("Navigation");
 
-
         actionBar.setDisplayShowHomeEnabled(true);
+
+        List<KindOfAnimal> list = new ArrayList<>();
+        list = getDataKindOfAnimal();
+
+        // Find the RecyclerView within the nav header layout
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
+        // Set up RecyclerView
+        KindOfAnimalAdapter adapter = new KindOfAnimalAdapter(list, getApplication());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
 
@@ -52,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
     private List<KindOfAnimal> getDataKindOfAnimal()
     {
         List<KindOfAnimal> list = new ArrayList<>();
-        list.add(new KindOfAnimal("Seas", R.drawable.animals_birds));
-        list.add(new KindOfAnimal("Mammals", R.drawable.animals_birds));
+        list.add(new KindOfAnimal("Seas", R.drawable.animal_oceans));
+        list.add(new KindOfAnimal("Mammals", R.drawable.animal_mammals));
         list.add(new KindOfAnimal("Birds", R.drawable.animals_birds));
 
         return list;
