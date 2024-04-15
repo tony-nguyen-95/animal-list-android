@@ -28,7 +28,15 @@
             android:layout_marginTop="10dp"
             android:contentDescription="@string/animal_title" />
 
-        <!-- Your content layout here -->
+        <!-- Content layout start here -->
+        <FrameLayout
+            android:id="@+id/fragment_grid_animals"
+            android:layout_below="@id/animalImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="10dp" />
 
     </RelativeLayout>
 
