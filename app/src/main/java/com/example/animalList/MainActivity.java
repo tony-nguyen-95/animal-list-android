@@ -9,13 +9,17 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.animalList.adapter.KindOfAnimalAdapter;
+import com.example.animalList.fragment.GridAnimalsFragment;
 import com.example.animalList.model.KindOfAnimal;
 
 import java.util.ArrayList;
@@ -75,10 +79,25 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Handle the action bar drawer toggle
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        return super.onOptionsItemSelected(item);
+
+        System.out.println(item.getItemId());
+
+        DrawerLayout drawerLayout = findViewById(R.id.my_drawer_layout); // Adjust the ID of the drawer layout if necessary
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        GridAnimalsFragment gridAnimalsFragment = GridAnimalsFragment.newInstance(new KindOfAnimal("Mammals", R.drawable.animal_mammals));
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_grid_animals, gridAnimalsFragment); // Replace "fragment_container" with the ID of your fragment container
+        transaction.addToBackStack(null); // Add to back stack if you want to handle back navigation
+        transaction.commit();
+
+        return true;
+
+
     }
 
 
