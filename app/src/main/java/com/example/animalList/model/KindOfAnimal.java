@@ -12,12 +12,14 @@ public class KindOfAnimal implements Serializable {
     public int photo;
     public ArrayList<Animal> listRepresent;
 
-    public KindOfAnimal(String name, int photo)
+    public KindOfAnimal(String name, int photo,ArrayList<Animal>listRepresent)
         {
             this.name = name;
             this.photo = photo;
-//            this.listRepresent = listRepresent;
+            this.listRepresent = listRepresent;
         }
 
-
+    public ArrayList<Animal> getListRepresent() {
+        return listRepresent;
+    }
 }

@@ -6,9 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.animalList.R;
+import com.example.animalList.fragment.GridAnimalsFragment;
 import com.example.animalList.model.KindOfAnimal;
 import com.example.animalList.model.KindOfAnimalViewHolder;
 
@@ -18,12 +23,12 @@ import java.util.List;
 public class KindOfAnimalAdapter extends RecyclerView.Adapter<KindOfAnimalViewHolder> {
 
     List<KindOfAnimal> list = Collections.emptyList();
-    Context context;
+    AppCompatActivity appContext;
 
-    public KindOfAnimalAdapter(List<KindOfAnimal> list, Context context)
+    public KindOfAnimalAdapter(List<KindOfAnimal> list, Context context,AppCompatActivity appContext )
     {
         this.list = list;
-        this.context = context;
+        this.appContext = appContext;
     }
 
     @Override
@@ -42,16 +47,32 @@ public class KindOfAnimalAdapter extends RecyclerView.Adapter<KindOfAnimalViewHo
     }
 
     @Override
-    public void onBindViewHolder(KindOfAnimalViewHolder viewHolder, final int position)
-    {
-        int index = viewHolder.getAdapterPosition();
-        viewHolder.getKindName().setText(list.get(position).name);
-        viewHolder.getKindPhoto().setImageResource(list.get(position).photo);
+    public void onBindViewHolder(KindOfAnimalViewHolder viewHolder, final int position) {
+        // Get the KindOfAnimal object for the current position
+        final KindOfAnimal currentKindOfAnimal = list.get(position);
+
+        // Set the text and image for the view holder
+        viewHolder.getKindName().setText(currentKindOfAnimal.name);
+        viewHolder.getKindPhoto().setImageResource(currentKindOfAnimal.photo);
+
+        // Set the click listener
         viewHolder.getView().setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                Toast.makeText(context, "clicked item index is "+index, Toast.LENGTH_SHORT).show();
+            public void onClick(View view) {
+                // Close the drawer
+                DrawerLayout drawerLayout = view.getRootView().findViewById(R.id.my_drawer_layout);
+                drawerLayout.closeDrawer(GravityCompat.START);
+
+                // Create an instance of GridAnimalsFragment with the current KindOfAnimal object
+                GridAnimalsFragment gridAnimalsFragment = GridAnimalsFragment.newInstance(currentKindOfAnimal);
+
+                System.out.println(currentKindOfAnimal);
+
+                // Start a fragment transaction
+                FragmentTransaction transaction = appContext.getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_grid_animals, gridAnimalsFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
     }
@@ -61,4 +82,6 @@ public class KindOfAnimalAdapter extends RecyclerView.Adapter<KindOfAnimalViewHo
     {
         return list.size();
     }
+
+
 }
