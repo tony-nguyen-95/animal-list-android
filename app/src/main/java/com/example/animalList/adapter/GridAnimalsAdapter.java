@@ -22,11 +22,10 @@ public class GridAnimalsAdapter extends  BaseAdapter {
 
     private Context mContext;
     private List<Animal> mAnimalList;
-    private AppCompatActivity mActivity;
+
     private int REQUEST_CODE_DETAIL_ACTIVITY =1;
 
-    public GridAnimalsAdapter(AppCompatActivity activity,Context context, List<Animal> animalList) {
-        mActivity = activity;
+    public GridAnimalsAdapter(Context context, List<Animal> animalList) {
         mContext = context;
         mAnimalList = animalList;
 
@@ -50,7 +49,7 @@ public class GridAnimalsAdapter extends  BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.fragment_grid_animals, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.grid_item_layout, parent, false);
         }
 
         ImageView imageView = convertView.findViewById(R.id.imageView);
