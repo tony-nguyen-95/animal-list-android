@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.animalList.R;
+import com.example.animalList.adapter.DetailViewPagerAdapter;
 import com.example.animalList.model.Animal;
 import com.example.animalList.model.KindOfAnimal;
 
@@ -21,10 +22,14 @@ import java.io.Serializable;
 public class AnimalDetailFragment extends Fragment implements Serializable {
     private static final String ARG_ANIMAL = "animal";
     private Animal animal;
+    private DetailViewPagerAdapter detailViewPagerAdapter;
 
     // Private constructor to prevent direct instantiation
     private AnimalDetailFragment() {}
 
+    public void setDetailViewPagerAdapter(DetailViewPagerAdapter adapter) {
+        this.detailViewPagerAdapter = adapter;
+    }
     public static AnimalDetailFragment newInstance(Animal animal){
         AnimalDetailFragment fragment = new AnimalDetailFragment();
         Bundle args = new Bundle();
@@ -61,11 +66,11 @@ public class AnimalDetailFragment extends Fragment implements Serializable {
             imageDetailView.setImageResource(animal.getIconImage());
             descriptionTextView.setText(animal.getDescription());
 
-            // Set the state of the love button (for example, visibility or icon)
+            // Set the state of the love button
             if (animal.isLiked()) {
-                loveButton.setImageResource(R.drawable.ic_heart_filled); // Set the icon for liked state
+                loveButton.setImageResource(R.drawable.ic_heart_filled);
             } else {
-                loveButton.setImageResource(R.drawable.ic_heart); // Set the icon for unliked state
+                loveButton.setImageResource(R.drawable.ic_heart);
             }
 
             // Set an OnClickListener on the love button
@@ -82,15 +87,11 @@ public class AnimalDetailFragment extends Fragment implements Serializable {
                         loveButton.setImageResource(R.drawable.ic_heart);
                     }
 
-                    // Notify the adapter that the data set has changed
-                    // You need to have a reference to the adapter to notify it about data changes
-                    // Assuming you have a reference to the adapter, use the notifyDataSetChanged() method
-                    // For example:
-                    // adapter.notifyDataSetChanged();
-
-                    // You need to obtain a reference to the adapter used in the parent activity/fragment
-                    // to notify it about data changes. This might involve accessing a shared data structure
-                    // or method in the parent component that provides the adapter reference.
+                    // Check if the adapter is not null
+                    if (detailViewPagerAdapter != null) {
+                        // Notify the adapter that the data set has changed
+                        detailViewPagerAdapter.notifyDataSetChanged();
+                    }
                 }
             });
         }
@@ -98,6 +99,7 @@ public class AnimalDetailFragment extends Fragment implements Serializable {
         // Return the inflated view
         return view;
     }
+
 
 
 

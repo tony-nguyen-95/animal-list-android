@@ -60,6 +60,11 @@ public class ViewPagerAdapterFragment extends Fragment {
 
             // Create and set the adapter for the ViewPager
             DetailViewPagerAdapter adapter = new DetailViewPagerAdapter(animalFragments, getChildFragmentManager());
+
+            for(AnimalDetailFragment animalDetailFragment: animalFragments){
+                animalDetailFragment.setDetailViewPagerAdapter(adapter);
+            }
+
             viewPager.setAdapter(adapter);
         }
 
