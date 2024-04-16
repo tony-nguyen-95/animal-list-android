@@ -14,6 +14,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.animalList.R;
 import com.example.animalList.fragment.AnimalDetailFragment;
+import com.example.animalList.fragment.MenuFragment;
+import com.example.animalList.fragment.ViewPagerAdapterFragment;
 import com.example.animalList.model.Animal;
 
 import java.util.ArrayList;
@@ -22,11 +24,11 @@ import java.util.List;
 public class GridAnimalsAdapter extends  BaseAdapter {
 
     private Context mContext;
-    private List<Animal> mAnimalList;
+    private ArrayList<Animal> mAnimalList;
 
     private int REQUEST_CODE_DETAIL_ACTIVITY =1;
 
-    public GridAnimalsAdapter(Context context, List<Animal> animalList) {
+    public GridAnimalsAdapter(Context context, ArrayList<Animal> animalList) {
         mContext = context;
         mAnimalList = animalList;
 
@@ -74,27 +76,12 @@ public class GridAnimalsAdapter extends  BaseAdapter {
                 // Assuming mContext is an AppCompatActivity or can be cast to it
                 AppCompatActivity appActivity = (AppCompatActivity) mContext;
 
-                // Create a list of AnimalDetailFragment based on the list of animals
-                ArrayList<AnimalDetailFragment> animalFragments = new ArrayList<>();
-                for (Animal animal : mAnimalList) {
-                    AnimalDetailFragment fragment = AnimalDetailFragment.newInstance(animal);
-                    animalFragments.add(fragment);
-                }
+                // Replace ViewPagerAdapter
+                ViewPagerAdapterFragment viewPagerAdapterFragment = ViewPagerAdapterFragment.newInstance(mAnimalList);
+                appActivity.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.ln_main, viewPagerAdapterFragment, null)
+                        .commit();
 
-                // Create a new instance of DetailViewPagerAdapter with the list of AnimalDetailFragment and FragmentManager
-                DetailViewPagerAdapter detailViewPagerAdapter = new DetailViewPagerAdapter(animalFragments, appActivity.getSupportFragmentManager());
-
-                // Begin a fragment transaction
-                FragmentTransaction transaction = appActivity.getSupportFragmentManager().beginTransaction();
-
-                // Create an instance of AnimalDetailFragment using the clicked animal
-                AnimalDetailFragment animalDetailFragment = AnimalDetailFragment.newInstance(animal);
-
-                // Replace the current fragment with the new AnimalDetailFragment
-                transaction.replace(R.id.ln_main, animalDetailFragment); // Update 'fragment_container' to match the ID of the container where the new fragment should be placed
-
-                // Commit the transaction
-                transaction.commit();
             }
         });
 
