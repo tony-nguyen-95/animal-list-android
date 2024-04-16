@@ -33,7 +33,7 @@ public class KindOfAnimalAdapter extends RecyclerView.Adapter<KindOfAnimalViewHo
     public KindOfAnimalViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.kind_animal_recycle_item, parent, false);
+        View view = inflater.inflate(R.layout.kind_animal_recycle_menu_item, parent, false);
         return new KindOfAnimalViewHolder(view);
     }
 

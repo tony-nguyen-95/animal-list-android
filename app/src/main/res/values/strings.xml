@@ -12,4 +12,5 @@
     <string name="fragment1_text">First Fragment</string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
+    <string name="animal_detail_image">animal detail image</string>
 </resources>

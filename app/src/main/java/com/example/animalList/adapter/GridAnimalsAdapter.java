@@ -1,21 +1,22 @@
 package com.example.animalList.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.animalList.R;
+import com.example.animalList.fragment.AnimalDetailFragment;
 import com.example.animalList.model.Animal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GridAnimalsAdapter extends  BaseAdapter {
@@ -49,7 +50,7 @@ public class GridAnimalsAdapter extends  BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.grid_item_layout, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.grid_animal_item, parent, false);
         }
 
         ImageView imageView = convertView.findViewById(R.id.imageView);
@@ -70,17 +71,34 @@ public class GridAnimalsAdapter extends  BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "Clicked", Toast.LENGTH_SHORT).show();
-//                AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.3f);
-//                alphaAnimation.setDuration(600);
-//                v.startAnimation(alphaAnimation);
-//
-//                Intent intent = new Intent(mContext, DetailActivity.class);
-//                intent.putExtra("animal", animal); // pass the whole of an object
-//                mActivity.startActivityForResult(intent, REQUEST_CODE_DETAIL_ACTIVITY);
-//                mActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                // Assuming mContext is an AppCompatActivity or can be cast to it
+                AppCompatActivity appActivity = (AppCompatActivity) mContext;
+
+                // Create a list of AnimalDetailFragment based on the list of animals
+                ArrayList<AnimalDetailFragment> animalFragments = new ArrayList<>();
+                for (Animal animal : mAnimalList) {
+                    AnimalDetailFragment fragment = AnimalDetailFragment.newInstance(animal);
+                    animalFragments.add(fragment);
+                }
+
+                // Create a new instance of DetailViewPagerAdapter with the list of AnimalDetailFragment and FragmentManager
+                DetailViewPagerAdapter detailViewPagerAdapter = new DetailViewPagerAdapter(animalFragments, appActivity.getSupportFragmentManager());
+
+                // Begin a fragment transaction
+                FragmentTransaction transaction = appActivity.getSupportFragmentManager().beginTransaction();
+
+                // Create an instance of AnimalDetailFragment using the clicked animal
+                AnimalDetailFragment animalDetailFragment = AnimalDetailFragment.newInstance(animal);
+
+                // Replace the current fragment with the new AnimalDetailFragment
+                transaction.replace(R.id.ln_main, animalDetailFragment); // Update 'fragment_container' to match the ID of the container where the new fragment should be placed
+
+                // Commit the transaction
+                transaction.commit();
             }
         });
+
+
 
         return convertView;
     }
