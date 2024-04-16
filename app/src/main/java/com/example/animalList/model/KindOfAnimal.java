@@ -8,9 +8,9 @@ import java.util.List;
 
 public class KindOfAnimal implements Serializable {
 
-    public String name;
-    public int photo;
-    public ArrayList<Animal> listRepresent;
+    private String name = "";
+    private int photo = 0;
+    private ArrayList<Animal> listRepresent;
 
     public KindOfAnimal(String name, int photo,ArrayList<Animal>listRepresent)
         {
@@ -22,4 +22,13 @@ public class KindOfAnimal implements Serializable {
     public ArrayList<Animal> getListRepresent() {
         return listRepresent;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPhoto() {
+        return photo;
+    }
+
 }
