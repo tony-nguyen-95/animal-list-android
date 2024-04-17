@@ -85,7 +85,7 @@ public class ViewPagerAdapterFragment extends Fragment {
                 // Use the fragment manager to navigate back
                 appCompatActivity.getSupportFragmentManager().popBackStack();
 
-                // Re-render list
+                // Re-render grid list
                 GridAnimalsFragment gridAnimalsFragment = GridAnimalsFragment.newInstance(animals);
 
                 FragmentTransaction transaction = appCompatActivity.getSupportFragmentManager().beginTransaction();

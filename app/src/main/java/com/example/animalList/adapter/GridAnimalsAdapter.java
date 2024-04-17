@@ -4,9 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.animalList.R;
@@ -42,17 +44,32 @@ public class GridAnimalsAdapter extends RecyclerView.Adapter<AnimalViewHolder> {
 
         // Set the click listener for the animal item
         holder.itemView.setOnClickListener(v -> {
+            // Create an AlphaAnimation instance to animate the transparency
+            AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.2f);
+            alphaAnimation.setDuration(150);
+
+            // Start the animation on the item view
+            v.startAnimation(alphaAnimation);
+
             // Assuming mContext is an AppCompatActivity or can be cast to it
             AppCompatActivity appActivity = (AppCompatActivity) mContext;
 
-            // Replace ViewPagerAdapter
+            // Replace ViewPagerAdapterFragment
             ViewPagerAdapterFragment viewPagerAdapterFragment = ViewPagerAdapterFragment.newInstance(mAnimalList, position);
-            appActivity.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.ln_main, viewPagerAdapterFragment)
-                    .addToBackStack(null)
-                    .commit();
+
+            // Begin the fragment transaction
+            FragmentTransaction transaction = appActivity.getSupportFragmentManager().beginTransaction();
+
+            // Set custom animations, tween (flip)
+            transaction.setCustomAnimations(R.anim.flip_in, R.anim.flip_out);
+
+            // Replace fragment and add to back stack
+            transaction.replace(R.id.ln_main, viewPagerAdapterFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
     }
+
 
     @Override
     public int getItemCount() {
