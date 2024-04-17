@@ -87,7 +87,6 @@ public class ViewPagerAdapterFragment extends Fragment {
 
                 // Re-render grid list
                 GridAnimalsFragment gridAnimalsFragment = GridAnimalsFragment.newInstance(animals);
-
                 FragmentTransaction transaction = appCompatActivity.getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_grid_animals, gridAnimalsFragment);
                 transaction.addToBackStack(null);
@@ -97,7 +96,6 @@ public class ViewPagerAdapterFragment extends Fragment {
 
         return view;
     }
-
 
 
     @Override
