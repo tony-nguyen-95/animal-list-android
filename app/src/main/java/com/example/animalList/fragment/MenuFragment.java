@@ -90,9 +90,9 @@ public class MenuFragment extends Fragment {
     {
         List<KindOfAnimal> list = new ArrayList<>();
 
-        list.add(new KindOfAnimal("Seas", R.drawable.animal_oceans, AnimalsData.getInstance().getSeaAnimals()));
-        list.add(new KindOfAnimal("Mammals", R.drawable.animal_mammals, AnimalsData.getInstance().getMammals()));
-        list.add(new KindOfAnimal("Birds", R.drawable.animals_birds, AnimalsData.getInstance().getBirds()));
+        list.add(new KindOfAnimal("Seas", R.drawable.animal_oceans, AnimalsData.getInstance(mContext).getSeaAnimals()));
+        list.add(new KindOfAnimal("Mammals", R.drawable.animal_mammals, AnimalsData.getInstance(mContext).getMammals()));
+        list.add(new KindOfAnimal("Birds", R.drawable.animals_birds, AnimalsData.getInstance(mContext).getBirds()));
 
         return list;
     }

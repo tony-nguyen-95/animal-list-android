@@ -9,23 +9,28 @@ import android.widget.GridView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.animalList.R;
 import com.example.animalList.adapter.GridAnimalsAdapter;
+import com.example.animalList.model.Animal;
 import com.example.animalList.model.KindOfAnimal;
+
+import java.util.ArrayList;
 
 public class GridAnimalsFragment extends Fragment {
 
     private static final String ARG_KIND_OF_ANIMAL = "kind_of_animal";
-    private KindOfAnimal kindOfAnimal;
+    private ArrayList<Animal> animals;
 
     // Private constructor to prevent direct instantiation
     private GridAnimalsFragment() {}
 
-    public static GridAnimalsFragment newInstance(KindOfAnimal kindOfAnimal) {
+    public static GridAnimalsFragment newInstance(ArrayList<Animal> animals) {
         GridAnimalsFragment fragment = new GridAnimalsFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_KIND_OF_ANIMAL, kindOfAnimal);
+        args.putSerializable("animals", animals);
         fragment.setArguments(args);
         return fragment;
     }
@@ -36,7 +41,7 @@ public class GridAnimalsFragment extends Fragment {
 
         // Retrieve arguments and initialize kindOfAnimal
         if (getArguments() != null) {
-            kindOfAnimal = (KindOfAnimal) getArguments().getSerializable(ARG_KIND_OF_ANIMAL);
+            animals = (ArrayList<Animal>) getArguments().getSerializable("animals");
         }
     }
 
@@ -45,15 +50,17 @@ public class GridAnimalsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_grid_animals, container, false);
 
-        GridView gridView = view.findViewById(R.id.grid_animals);
+        RecyclerView recyclerView = view.findViewById(R.id.grid_animals);
 
-        if (kindOfAnimal != null && kindOfAnimal.getListRepresent() != null) {
-            // Create an instance of GridAnimalsAdapter
-            GridAnimalsAdapter gridAnimalsAdapter = new GridAnimalsAdapter(getContext(), kindOfAnimal.getListRepresent());
+        // Set up a GridLayoutManager with 3 columns
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
+        recyclerView.setLayoutManager(gridLayoutManager);
 
-            // Set the adapter to the GridView
-            gridView.setAdapter(gridAnimalsAdapter);
-        }
+        // Create an instance of your AnimalAdapter
+        GridAnimalsAdapter animalAdapter = new GridAnimalsAdapter(getContext(),animals);
+
+        // Set the adapter on the RecyclerView
+        recyclerView.setAdapter(animalAdapter);
 
         return view;
     }

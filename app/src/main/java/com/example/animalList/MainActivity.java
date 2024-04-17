@@ -24,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         MenuFragment menuFragment = new MenuFragment();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.ln_main, menuFragment, null)
+                .replace(R.id.ln_main, menuFragment)
+                .addToBackStack(null)
                 .commit();
     }
-
 
 }

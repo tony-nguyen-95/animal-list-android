@@ -1,5 +1,8 @@
 package com.example.animalList.data;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.example.animalList.R;
 import com.example.animalList.model.Animal;
 
@@ -10,16 +13,20 @@ public class AnimalsData {
     private ArrayList<Animal> mammals;
     private ArrayList<Animal> birds;
     private ArrayList<Animal> seaAnimals;
+    private SharedPreferences sharedPreferences;
+    private static final String SHARED_PREFS_NAME = "AnimalsDataPrefs";
 
-    private AnimalsData(){
+    private AnimalsData(Context context) {
+        sharedPreferences = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
         createDataMammals();
         createDataBird();
         createDataSeas();
+        loadLovedState(); // Load the loved state from SharedPreferences
     }
 
-    public static AnimalsData getInstance(){
-        if(mInstance == null){
-            return new AnimalsData();
+    public static AnimalsData getInstance(Context context) {
+        if (mInstance == null) {
+            mInstance = new AnimalsData(context);
         }
         return mInstance;
     }
@@ -75,4 +82,35 @@ public class AnimalsData {
     public ArrayList<Animal> getSeaAnimals() {
         return seaAnimals;
     }
+
+    public ArrayList<Animal> getAll() {
+        ArrayList<Animal> allAnimals = new ArrayList<>();
+        allAnimals.addAll(mammals);
+        allAnimals.addAll(birds);
+        allAnimals.addAll(seaAnimals);
+        return allAnimals;
+    }
+
+    /**
+     * Save the loved state of an animal.
+     */
+    public void saveLovedState(Animal animal) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("animal_loved_" + animal.getId(), animal.isLiked());
+        editor.apply();
+    }
+
+    /**
+     * Load the loved state of all animals from SharedPreferences.
+     */
+    public void loadLovedState() {
+        // Get the shared preferences editor
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        // Clear the shared preferences
+        editor.clear();
+        editor.apply();
+    }
+
+
 }

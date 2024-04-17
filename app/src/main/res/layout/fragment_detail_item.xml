@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
     <!-- ImageView for animal image -->
     <ImageView
         android:id="@+id/animalImageView"
@@ -12,7 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:adjustViewBounds="true"
-        android:layout_marginTop="56dp"
         android:scaleType="centerCrop"
         android:contentDescription="@string/animal_detail_image" />
 

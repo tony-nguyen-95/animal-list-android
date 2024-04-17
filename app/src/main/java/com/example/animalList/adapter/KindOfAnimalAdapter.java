@@ -52,7 +52,7 @@ public class KindOfAnimalAdapter extends RecyclerView.Adapter<KindOfAnimalViewHo
             drawerLayout.closeDrawer(GravityCompat.START);
 
             // Create an instance of GridAnimalsFragment with the current kind of animal
-            GridAnimalsFragment gridAnimalsFragment = GridAnimalsFragment.newInstance(currentKindOfAnimal);
+            GridAnimalsFragment gridAnimalsFragment = GridAnimalsFragment.newInstance(currentKindOfAnimal.getListRepresent());
 
             // Start a fragment transaction
             FragmentTransaction transaction = appCompatActivity.getSupportFragmentManager().beginTransaction();
