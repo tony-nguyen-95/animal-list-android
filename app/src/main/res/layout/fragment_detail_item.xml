@@ -38,16 +38,40 @@
             android:layout_alignParentStart="true"
             tools:text="Animal Name" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true">
+        <ImageButton
+            android:id="@+id/phoneButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:contentDescription="@string/phone_button"
+            tools:src="@drawable/ic_phone"
+            android:autofillHints="green"
+            />
+            <TextView
+                android:id="@+id/phoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:text=""
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                />
+
         <!-- ImageButton for love button -->
         <ImageButton
             android:id="@+id/loveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:contentDescription="@string/love_button"
-            android:layout_alignTop="@id/animalNameTextView"
             android:background="@color/white"
             tools:src="@drawable/ic_heart_filled" />
+        </LinearLayout>
+
+
 
     </RelativeLayout>
 
