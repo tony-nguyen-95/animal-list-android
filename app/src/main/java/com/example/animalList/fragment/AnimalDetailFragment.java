@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -69,6 +72,7 @@ public class AnimalDetailFragment extends Fragment implements Serializable {
         ImageView imageDetailView = view.findViewById(R.id.animalImageView);
         TextView descriptionTextView = view.findViewById(R.id.descriptionTextView);
         ImageButton loveButton = view.findViewById(R.id.loveButton);
+        ImageButton phoneButton = view.findViewById(R.id.phoneButton);
 
         // Check if the animal data is available
         if (animal != null) {
@@ -107,6 +111,43 @@ public class AnimalDetailFragment extends Fragment implements Serializable {
                         // Notify the adapter that the data set has changed
                         detailViewPagerAdapter.notifyDataSetChanged();
                     }
+                }
+            });
+
+            phoneButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Create an AlertDialog to show the pop-up form
+                    AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+
+                    // Inflate the custom form layout
+                    LayoutInflater formInflater = LayoutInflater.from(requireContext());
+                    View formView = formInflater.inflate(R.layout.dialog_form, null);
+
+                    // Set the form view as the content of the dialog
+                    builder.setView(formView);
+
+                    // Configure the dialog's buttons and views
+                    EditText inputField = formView.findViewById(R.id.inputField);
+                    Button submitButton = formView.findViewById(R.id.submitButton);
+
+                    AlertDialog dialog = builder.create();
+
+
+                    // Define actions for the buttons
+                    submitButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Handle form submission
+                            String userInput = inputField.getText().toString();
+                            Toast.makeText(requireContext(), "Form submitted: " + userInput, Toast.LENGTH_SHORT).show();
+                            // Dismiss the dialog after form submission
+                            dialog.dismiss();
+                        }
+                    });
+
+                    // Create and show the dialog
+                    dialog.show();
                 }
             });
         }
