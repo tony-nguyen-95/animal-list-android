@@ -21,7 +21,8 @@ public class AnimalsData {
         createDataMammals();
         createDataBird();
         createDataSeas();
-        loadLovedState(); // Load the loved state from SharedPreferences
+        loadLovedState();
+        loadPhoneNumbers();
     }
 
     public static AnimalsData getInstance(Context context) {
@@ -100,17 +101,54 @@ public class AnimalsData {
         editor.apply();
     }
 
+
     /**
      * Load the loved state of all animals from SharedPreferences.
      */
     public void loadLovedState() {
-        // Get the shared preferences editor
+        // Retrieve the shared preferences
+        SharedPreferences prefs = sharedPreferences;
+
+        // Iterate over all animals and load their loved state
+        for (Animal animal : getAll()) {
+            boolean isLiked = prefs.getBoolean("animal_loved_" + animal.getId(), false);
+            animal.setLiked(isLiked);
+        }
+    }
+
+    /**
+     * Save the phone number for the specified animal.
+     */
+    public void savePhoneNumber(int animalId, String phoneNumber) {
+        // Retrieve the shared preferences
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        // Clear the shared preferences
-        editor.clear();
+        // Save the phone number
+        editor.putString("animal_phone_" + animalId, phoneNumber);
         editor.apply();
     }
 
+    /**
+     * Load the phone numbers of all animals from SharedPreferences.
+     */
+    public void loadPhoneNumbers() {
+        // Retrieve the shared preferences
+        SharedPreferences prefs = sharedPreferences;
+
+        // Iterate over all animals and load their phone numbers
+        for (Animal animal : getAll()) {
+            String phoneNumber = prefs.getString("animal_phone_" + animal.getId(), null);
+            animal.setPhoneNumber(phoneNumber);
+        }
+    }
+
+    /**
+     * Remove the phone number for the specified animal from SharedPreferences.
+     */
+    public void removePhoneNumber(int animalId) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("animal_phone_" + animalId);
+        editor.apply();
+    }
 
 }

@@ -7,6 +7,7 @@ public class Animal implements Serializable {
     private int mId;
     private String mName;
     private String mDescription;
+    private  String mPhoneNumber;
     private int mImage;
 
     private int mIconImage;
@@ -47,5 +48,13 @@ public class Animal implements Serializable {
 
     public void setLiked(boolean status){
         this.isLiked = status;
+    }
+
+    public String getPhoneNumber() {
+        return mPhoneNumber;
+    }
+
+    public void setPhoneNumber(String mPhoneNumber) {
+        this.mPhoneNumber = mPhoneNumber;
     }
 }

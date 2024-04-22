@@ -14,4 +14,6 @@
     <string name="nav_close">Close</string>
     <string name="animal_detail_image">animal detail image</string>
     <string name="phone_button">Phone</string>
+    <string name="enter_phone">Phone</string>
+    <string name="icon_animal">Icon Animal</string>
 </resources>
