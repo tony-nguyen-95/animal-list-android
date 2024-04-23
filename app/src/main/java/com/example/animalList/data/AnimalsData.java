@@ -3,7 +3,6 @@ package com.example.animalList.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.animalList.R;
 import com.example.animalList.model.Animal;
 
 import java.util.ArrayList;
@@ -153,5 +152,7 @@ public class AnimalsData {
         editor.remove("animal_phone_" + animalId);
         editor.apply();
     }
+
+
 
 }

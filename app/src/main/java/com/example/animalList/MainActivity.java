@@ -23,6 +23,11 @@ import com.example.animalList.data.AnimalsData;
 import com.example.animalList.fragment.MenuFragment;
 import com.example.animalList.model.Animal;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initViews();
         requestPermissionsIfNeeded();
+
+
     }
 
     private void initViews() {
@@ -80,4 +87,6 @@ public class MainActivity extends AppCompatActivity {
         intentFilter.addAction(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
         registerReceiver(incomingCallReceiver, intentFilter);
     }
+
+
 }
