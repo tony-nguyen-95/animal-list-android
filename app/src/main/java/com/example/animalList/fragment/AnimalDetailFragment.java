@@ -64,7 +64,8 @@ public class AnimalDetailFragment extends Fragment implements Serializable {
 
         if (animal != null) {
             nameTextView.setText(animal.getName());
-            imageDetailView.setImageResource(animal.getImage());
+            animal.loadImageFromAssets(getContext(), imageDetailView, animal.getImagePath());
+//            imageDetailView.setImageResource(animal.getImage());
             descriptionTextView.setText(animal.getDescription());
 
             if (animal.isLiked()) {
@@ -101,7 +102,8 @@ public class AnimalDetailFragment extends Fragment implements Serializable {
                     builder.setView(formView);
 
                     ImageView formImageTitle = formView.findViewById(R.id.formImageTitle);
-                    formImageTitle.setImageResource(animal.getIconImage());
+                    animal.loadImageFromAssets(getContext(),formImageTitle,animal.getIconImagePath());
+//                    formImageTitle.setImageResource(animal.getIconImage());
 
                     EditText inputField = formView.findViewById(R.id.inputField);
                     Button submitButton = formView.findViewById(R.id.saveButton);
@@ -130,6 +132,7 @@ public class AnimalDetailFragment extends Fragment implements Serializable {
                         @Override
                         public void onClick(View v) {
                             animal.setPhoneNumber(null);
+                            phoneNumber.setText(null);
                             phoneNumber.setVisibility(View.INVISIBLE);
                             AnimalsData.getInstance(getContext()).removePhoneNumber(animal.getId());
                             Toast.makeText(requireContext(), "Phone number deleted", Toast.LENGTH_SHORT).show();

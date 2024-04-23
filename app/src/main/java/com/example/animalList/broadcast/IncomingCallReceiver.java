@@ -1,6 +1,5 @@
 package com.example.animalList.broadcast;
 
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,59 +7,54 @@ import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.animalList.R;
 import com.example.animalList.data.AnimalsData;
 import com.example.animalList.model.Animal;
 
+import java.util.ArrayList;
+
 public class IncomingCallReceiver extends BroadcastReceiver {
-    private Context mContext;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // Initialize the context
-        mContext = context;
+        String state = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
 
-        // Check if the intent action is "android.intent.action.PHONE_STATE"
-        if (intent.getAction().equals(TelephonyManager.ACTION_PHONE_STATE_CHANGED)) {
-            // Get the incoming call state
-            String state = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
+        if (state != null && state.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
+            String incomingCallerNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
 
-            // Check if the call state is "RINGING"
-            if (state != null && state.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
-                // Get the incoming phone number
-                String incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
-
-               isCallFromAnimal(incomingNumber);
+            if (incomingCallerNumber != null) {
+                findAnimalByPhoneNumber(context, incomingCallerNumber);
             }
         }
     }
 
-    private void isCallFromAnimal(String phoneNumber) {
-        // Iterate over all animals
-        for (Animal animal : AnimalsData.getInstance(mContext.getApplicationContext()).getAll()) {
-            // Check if the phone number matches
-            if (phoneNumber.equals(animal.getPhoneNumber())) {
-                showCustomToastWithAnimalImage(animal);
+    private void findAnimalByPhoneNumber(Context context, String phoneNumber) {
+        ArrayList<Animal> animals = AnimalsData.getInstance(context).getAll();
+        for (Animal animal : animals) {
+            String animalPhoneNumber = animal.getPhoneNumber();
+            if (animalPhoneNumber != null && animalPhoneNumber.equals(phoneNumber)) {
+                // Inflate custom toast layout
+                View customToastView = LayoutInflater.from(context).inflate(R.layout.custom_toast_incoming_call, null);
+
+                // Set custom toast text
+                ImageView imageViewView = customToastView.findViewById(R.id.icon_toast_animal);
+                animal.loadImageFromAssets(context,imageViewView,animal.getIconImagePath());
+//                imageViewView.setImageResource(animal.getIconImage());
+
+                // Show the custom toast
+                Toast customToast = new Toast(context);
+                customToast.setDuration(Toast.LENGTH_LONG);
+                customToast.setView(customToastView);
+                customToast.show();
+
+                // If you want to do further processing, you can return or break here
                 return;
             }
         }
-    }
-
-    private void showCustomToastWithAnimalImage(Animal animal) {
-        // Inflate custom toast layout
-        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = inflater.inflate(R.layout.custom_toast_incoming_call, null);
-
-        // Set animal image
-        ImageView animalImage = layout.findViewById(R.id.icon_toast_animal);
-        animalImage.setImageResource(animal.getIconImage());
-
-        // Create and show the toast
-        Toast toast = new Toast(mContext);
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setView(layout);
-        toast.show();
+        // If no matching animal is found for the given phone number
+        Toast.makeText(context, "No animal found for the phone number: " + phoneNumber, Toast.LENGTH_LONG).show();
     }
 }

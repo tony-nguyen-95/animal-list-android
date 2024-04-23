@@ -1,32 +1,36 @@
 package com.example.animalList.model;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.animalList.model.Animal;
 import com.example.animalList.R;
 
 public class AnimalViewHolder extends RecyclerView.ViewHolder {
-    // Declare views in the item layout
     private ImageView animalIconImageView;
     private TextView animalNameTextView;
     private ImageView lovedImageView;
+    private Context context;
 
     public AnimalViewHolder(View itemView) {
         super(itemView);
-        // Initialize views from the item layout
-        animalIconImageView = itemView.findViewById(R.id.imageView); // Reference to the icon ImageView
-        animalNameTextView = itemView.findViewById(R.id.textView); // Reference to the name TextView
-        lovedImageView = itemView.findViewById(R.id.lovedImage); // Reference to the loved ImageView
+        context = itemView.getContext();
+        animalIconImageView = itemView.findViewById(R.id.imageView);
+        animalNameTextView = itemView.findViewById(R.id.textView);
+        lovedImageView = itemView.findViewById(R.id.lovedImage);
     }
 
-    // Method to bind data to the views
     public void bind(Animal animal) {
-        // Set the animal icon and name
-        animalIconImageView.setImageResource(animal.getIconImage());
+        // Set the animal name
         animalNameTextView.setText(animal.getName());
+
+        animal.loadImageFromAssets(context,animalIconImageView, animal.getIconImagePath());
 
         // Set the visibility of the loved image based on whether the animal is liked
         if (animal.isLiked()) {
@@ -36,7 +40,6 @@ public class AnimalViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    // Getters for accessing the views outside of the view holder
     public ImageView getAnimalIconImageView() {
         return animalIconImageView;
     }
