@@ -65,8 +65,7 @@ public class AnimalDetailFragment extends Fragment implements Serializable {
         if (animal != null) {
             nameTextView.setText(animal.getName());
             animal.loadImageFromAssets(getContext(), imageDetailView, animal.getImagePath());
-//            imageDetailView.setImageResource(animal.getImage());
-            descriptionTextView.setText(animal.getDescription());
+            animal.loadDescriptionFromAssets(getContext(), descriptionTextView,animal.getDescriptionPath());
 
             if (animal.isLiked()) {
                 loveButton.setImageResource(R.drawable.ic_heart_filled);

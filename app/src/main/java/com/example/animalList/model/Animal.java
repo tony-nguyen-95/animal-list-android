@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,16 +13,16 @@ import java.io.Serializable;
 public class Animal implements Serializable {
     private int mId;
     private String mName;
-    private String mDescription;
+    private String mDescriptionPath; // File path for the description
     private String mPhoneNumber;
     private String mImagePath; // File path for the image
     private String mIconImagePath; // File path for the icon image
     private boolean isLiked = false;
 
-    public Animal(int id, String name, String description, String imagePath, String iconImagePath) {
+    public Animal(int id, String name, String descriptionPath, String imagePath, String iconImagePath) {
         mId = id;
         mName = name;
-        mDescription = description;
+        mDescriptionPath = descriptionPath;
         mImagePath = imagePath;
         mIconImagePath = iconImagePath;
     }
@@ -34,8 +35,8 @@ public class Animal implements Serializable {
         return mName;
     }
 
-    public String getDescription() {
-        return mDescription;
+    public String getDescriptionPath() {
+        return mDescriptionPath;
     }
 
     public String getImagePath() {
@@ -62,7 +63,7 @@ public class Animal implements Serializable {
         mPhoneNumber = phoneNumber;
     }
 
-    public void loadImageFromAssets(Context context,ImageView imageView, String imagePath) {
+    public void loadImageFromAssets(Context context, ImageView imageView, String imagePath) {
         try {
             // Open the input stream
             InputStream inputStream = context.getAssets().open(imagePath);
@@ -79,4 +80,28 @@ public class Animal implements Serializable {
             e.printStackTrace();
         }
     }
+
+    public void loadDescriptionFromAssets(Context context, TextView textView, String descriptionPath) {
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            // Open the input stream
+            InputStream inputStream = context.getAssets().open(descriptionPath);
+
+            // Read from the input stream
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) != -1) {
+                stringBuilder.append(new String(buffer, 0, length));
+            }
+
+            // Close the input stream
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Set the loaded description to the TextView
+        textView.setText(stringBuilder.toString());
+    }
+
 }
