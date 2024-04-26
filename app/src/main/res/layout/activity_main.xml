@@ -3,30 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".MainActivity" >
 
-    <!-- Title Image view at the top -->
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_title_animal"
-        android:scaleType="fitXY"
-        android:layout_marginTop="10dp"
-        android:contentDescription="@string/animal_title" />
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/pig"
+        android:layout_centerInParent="true"
+        tools:ignore="ContentDescription" />
 
-    <!-- Grid view below the image view, taking full width and centered -->
-    <GridView
-        android:id="@+id/grid_animals"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imageView"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:gravity="center"
-        android:numColumns="3"
-        android:horizontalSpacing="12dp"
-        android:verticalSpacing="16dp"/>
 
 </RelativeLayout>
