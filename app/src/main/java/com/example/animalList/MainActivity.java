@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Load appropriate string resources based on the device's language
         if (currentLocale.getLanguage().equals("vi")) {
-            Toast.makeText(this, "aaa",Toast.LENGTH_LONG).show();
             setLocale();
         }
 
