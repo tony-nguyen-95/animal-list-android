@@ -1,10 +1,5 @@
 <resources>
-    <string name="app_name">AnimalList</string>
-    <string name="animal_title">animal_title</string>
-    <string name="love">Love</string>
-    <string name="back_to_list">Back to List</string>
-    <string name="love_button">Love</string>
-    <string name="animal_detail_image">Animal Detail Image</string>
-    <string name="big_pig">Big Pig</string>
-    <string name="cat">Cat</string>
+    <string name="app_name">Animal Sound</string>
+    <string name="txt_pig">Pig</string>
+    <string name="txt_pig_desc">The pig, also called swine or hog, is an omnivorous, domesticated, even-toed, hoofed mammal. It is named the domestic pig when distinguishing it from other members of the genus Sus. It is considered a subspecies of Sus scrofa by some authorities, but as a distinct species by others.</string>
 </resources>

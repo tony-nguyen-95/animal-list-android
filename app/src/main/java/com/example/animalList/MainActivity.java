@@ -2,28 +2,38 @@ package com.example.animalList;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.widget.GridView;
+import android.widget.Toast;
 
-import com.example.animalList.model.Animal;
-import com.example.animalList.adapter.AnimalAdapter;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int orientation = getResources().getConfiguration().orientation;
 
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            setContentView(R.layout.activity_main_land);
-        } else {
-            setContentView(R.layout.activity_main);
+        // Detect the device's default locale
+        Locale currentLocale = getResources().getConfiguration().locale;
+
+
+        // Load appropriate string resources based on the device's language
+        if (currentLocale.getLanguage().equals("vi")) {
+            Toast.makeText(this, "aaa",Toast.LENGTH_LONG).show();
+            setLocale();
         }
+
+        setContentView(R.layout.activity_main);
+    }
+
+    private void setLocale() {
+        Locale locale = new Locale("vi");
+        Locale.setDefault(locale);
+        Resources resources = getResources();
+        android.content.res.Configuration config = resources.getConfiguration();
+        config.locale = locale;
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 
 }
