@@ -4,35 +4,43 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.Locale;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener  {
+    private ImageView ivAnimal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Detect the device's default locale
-        Locale currentLocale = getResources().getConfiguration().locale;
-
-
-        // Load appropriate string resources based on the device's language
-        if (currentLocale.getLanguage().equals("vi")) {
-            setLocale();
-        }
-
         setContentView(R.layout.activity_main);
+        initViews();
     }
 
-    private void setLocale() {
-        Locale locale = new Locale("vi");
-        Locale.setDefault(locale);
-        Resources resources = getResources();
-        android.content.res.Configuration config = resources.getConfiguration();
-        config.locale = locale;
-        resources.updateConfiguration(config, resources.getDisplayMetrics());
+    private void initViews() {
+        ivAnimal = findViewById(R.id.iv_animal);
+        findViewById(R.id.bt_alpha).setOnClickListener(this);
+        findViewById(R.id.bt_rotate).setOnClickListener(this);
+        findViewById(R.id.bt_scale).setOnClickListener(this);
+        findViewById(R.id.bt_trans).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.bt_alpha) {
+            ivAnimal.startAnimation(AnimationUtils.loadAnimation(this, R.anim.alpha));
+        } else if (v.getId() == R.id.bt_rotate) {
+            ivAnimal.startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate));
+        } else if (v.getId() == R.id.bt_scale) {
+            ivAnimal.startAnimation(AnimationUtils.loadAnimation(this, R.anim.scale));
+        } else if (v.getId() == R.id.bt_trans) {
+            ivAnimal.startAnimation(AnimationUtils.loadAnimation(this, R.anim.translate));
+        }
     }
 
 }

@@ -1,147 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-
     xmlns:tools="http://schemas.android.com/tools"
-
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
-
+    android:gravity="center_horizontal"
     android:orientation="vertical"
-
-    android:padding="10dp">
-
-
-
-    <TableRow
-
-        android:layout_width="match_parent"
-
-        android:layout_height="wrap_content"
-
-        android:layout_marginHorizontal="10dp"
-
-        android:layout_marginTop="10dp">
-
-
-
-        <TextView
-
-            android:id="@+id/tv_animal_name"
-
-            android:layout_width="wrap_content"
-
-            android:layout_height="wrap_content"
-
-            android:layout_gravity="start"
-
-            android:background="@drawable/bg_radius"
-
-            android:fontFamily="sans-serif-light"
-
-            android:paddingHorizontal="20dp"
-
-            android:text="@string/txt_pig"
-
-            android:textColor="@color/white"
-
-            android:textSize="34sp" />
-
-
-
-        <View
-
-            android:layout_width="0dp"
-
-            android:layout_height="match_parent"
-
-            android:layout_weight="1" />
-
-
-
-        <ImageView
-
-            android:id="@+id/iv_favorite"
-
-            android:layout_width="40dp"
-
-            android:layout_height="match_parent"
-
-            android:src="@drawable/ic_heart"
-
-            app:tint="#FF0000"
-
-            tools:ignore="ContentDescription" />
-
-    </TableRow>
-
-
-
-    <ScrollView
-
-        android:layout_width="match_parent"
-
-        android:layout_height="300dp"
-
-        android:layout_marginBottom="10dp">
-
-
-
-        <LinearLayout
-
-            android:layout_width="match_parent"
-
-            android:layout_height="wrap_content"
-
-            android:orientation="vertical">
-
-
-
-            <TextView
-
-                android:id="@+id/tv_animal_desc"
-
-                android:layout_width="match_parent"
-
-                android:layout_height="wrap_content"
-
-                android:layout_gravity="center"
-
-                android:fontFamily="sans-serif-light"
-
-                android:lineSpacingExtra="5dp"
-
-                android:padding="10dp"
-
-                android:text="@string/txt_pig_desc"
-
-                android:textColor="@color/black"
-
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-    </ScrollView>
-
-
+    android:padding="20dp"
+    tools:context=".MainActivity">
 
     <ImageView
-
         android:id="@+id/iv_animal"
-
-        android:layout_width="match_parent"
-
-        android:layout_height="0dp"
-
-        android:layout_weight="1"
-
-        android:scaleType="centerCrop"
-
-        android:src="@drawable/pig_detail"
-
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/elephant"
         tools:ignore="ContentDescription" />
 
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp">
+
+        <Button
+            android:id="@+id/bt_alpha"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:width="0dp"
+            android:backgroundTint="@color/design_default_color_primary"
+            android:text="@string/txt_alpha"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/bt_scale"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:width="0dp"
+            android:backgroundTint="@color/design_default_color_primary"
+            android:text="@string/txt_scale"
+            android:textAllCaps="true"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/bt_trans"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:width="0dp"
+            android:backgroundTint="@color/design_default_color_primary"
+            android:text="@string/txt_trans"
+            android:textAllCaps="true"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/bt_rotate"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:width="0dp"
+            android:backgroundTint="@color/design_default_color_primary"
+            android:text="@string/txt_rotate"
+            android:textAllCaps="true"
+            android:textSize="14sp" />
+    </TableRow>
 </LinearLayout>
