@@ -2,45 +2,33 @@ package com.example.animalList;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.Toast;
 
-import java.util.Locale;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener  {
-    private ImageView ivAnimal;
+public class MainActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        initViews();
-    }
+//        setContentView(R.layout.activity_main);
 
-    private void initViews() {
-        ivAnimal = findViewById(R.id.iv_animal);
-        findViewById(R.id.bt_alpha).setOnClickListener(this);
-        findViewById(R.id.bt_rotate).setOnClickListener(this);
-        findViewById(R.id.bt_scale).setOnClickListener(this);
-        findViewById(R.id.bt_trans).setOnClickListener(this);
-    }
+        setContentView(R.layout.button_toast);
 
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.bt_alpha) {
-            ivAnimal.startAnimation(AnimationUtils.loadAnimation(this, R.anim.alpha));
-        } else if (v.getId() == R.id.bt_rotate) {
-            ivAnimal.startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate));
-        } else if (v.getId() == R.id.bt_scale) {
-            ivAnimal.startAnimation(AnimationUtils.loadAnimation(this, R.anim.scale));
-        } else if (v.getId() == R.id.bt_trans) {
-            ivAnimal.startAnimation(AnimationUtils.loadAnimation(this, R.anim.translate));
-        }
+        Button clickMe = findViewById(R.id.click_me);
+        Button emptyButton = findViewById(R.id.empty_button);
+
+        clickMe.setOnClickListener(v -> {
+            Toast.makeText(this, "Clicked me", Toast.LENGTH_SHORT).show();
+        });
+
+        emptyButton.setOnClickListener(v->{
+            Toast.makeText(this, "Empty button", Toast.LENGTH_SHORT).show();
+        });
+
     }
 
 }
