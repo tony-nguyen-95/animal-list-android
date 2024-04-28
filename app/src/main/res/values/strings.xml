@@ -5,4 +5,5 @@
     <string name="back_to_list">Back to List</string>
     <string name="love_button">Love</string>
     <string name="animal_detail_image">Animal Detail Image</string>
+    <string name="txt_loading">Loading</string>
 </resources>
