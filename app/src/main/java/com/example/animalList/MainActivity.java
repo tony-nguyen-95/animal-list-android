@@ -13,12 +13,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Inflate the loading layout
-        View loadingView = getLayoutInflater().inflate(R.layout.loading_layout, null);
-
-        // Add the loading layout to the main layout of the activity
-        ViewGroup rootView = findViewById(android.R.id.content);
-        rootView.addView(loadingView);
     }
 
 }

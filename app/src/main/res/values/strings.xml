@@ -1,9 +1,8 @@
 <resources>
-    <string name="app_name">AnimalList</string>
-    <string name="animal_title">animal_title</string>
-    <string name="love">Love</string>
-    <string name="back_to_list">Back to List</string>
-    <string name="love_button">Love</string>
-    <string name="animal_detail_image">Animal Detail Image</string>
-    <string name="txt_loading">Loading</string>
+    <string name="app_name">Staff</string>
+    <string name="txt_name">Ali Connors</string>
+    <string name="txt_phone1">(650) 555-1234</string>
+    <string name="txt_title_mobile">Mobile</string>
+    <string name="txt_phone2">(323) 555-6789</string>
+    <string name="txt_email">aliconnors@example.com</string>
 </resources>
