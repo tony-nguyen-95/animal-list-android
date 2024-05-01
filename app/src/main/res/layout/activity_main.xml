@@ -1,67 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container"
+        android:name="com.example.animalList.FragmentFaceEmoji"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:id="@+id/group_head">
+        android:layout_height="match_parent" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/left_guideline"
-            app:layout_constraintGuide_percent="0.7"
-            android:orientation="vertical"/>
-        
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/left_guideline"
-            android:background="#ff00">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="top left"
-                android:id="@+id/top_left_txt"
-                android:background="@color/purple_200"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="below"
-                android:background="@color/white"
-                app:layout_constraintTop_toBottomOf="@+id/top_left_txt"
-                tools:ignore="MissingConstraints"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="@id/left_guideline"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:background="#ff0"
-            android:text="TOP RIGHT"
-            android:textAlignment="center"
-            android:gravity="center"
-            >
-        </TextView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="text below relative layout"
-        android:layout_below="@+id/group_head"
-        android:background="@color/black"
-        android:textColor="@color/white"
-        />
-
-
-</RelativeLayout>
+</FrameLayout>
