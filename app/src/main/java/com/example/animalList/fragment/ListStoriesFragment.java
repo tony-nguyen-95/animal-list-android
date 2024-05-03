@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextClock;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,21 +18,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.animalList.R;
 import com.example.animalList.adapter.KindOfStoryAdapter;
+import com.example.animalList.adapter.ListStoryAdapter;
 import com.example.animalList.data.StoriesData;
 import com.example.animalList.model.KindOfStory;
+import com.example.animalList.model.Story;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuFragment extends Fragment {
+public class ListStoriesFragment extends Fragment {
     private Context mContext;
+//    private ArrayList<Story> listStory;
+    private KindOfStory kindOfStory;
+
+    public ListStoriesFragment(KindOfStory kindOfStory) {
+        this.kindOfStory = kindOfStory;
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_menu, container, false);
+        View v = inflater.inflate(R.layout.fragment_list_story, container, false);
         initView(v);
         System.out.println(mContext);
         return v;
@@ -48,13 +58,21 @@ public class MenuFragment extends Fragment {
         }
 
         AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
-        List<KindOfStory> list = getDataKindOfStory();
 
-        RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = v.findViewById(R.id.recyclerViewListStory);
 
-        KindOfStoryAdapter adapter = new KindOfStoryAdapter(list, appCompatActivity);
+        ListStoryAdapter adapter = new ListStoryAdapter(kindOfStory, appCompatActivity);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        ImageView icBack = v.findViewById(R.id.iv_back);
+        TextView listNameView = v.findViewById(R.id.tv_name);
+        icBack.setVisibility(View.VISIBLE);
+
+        icBack.setOnClickListener(vw->{
+            appCompatActivity.getSupportFragmentManager().popBackStack();
+        });
+
+        listNameView.setText(kindOfStory.getName());
 
     }
 

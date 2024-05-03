@@ -15,8 +15,8 @@ public class KindOfStoryViewHolder extends RecyclerView.ViewHolder {
 
     public KindOfStoryViewHolder(View itemView){
         super(itemView);
-        kindName = itemView.findViewById(R.id.kindStoryName);
-        kindPhoto = itemView.findViewById(R.id.kindStoryPhoto);
+        kindName = itemView.findViewById(R.id.tv_topic);
+        kindPhoto = itemView.findViewById(R.id.iv_topic);
         view = itemView;
     }
 

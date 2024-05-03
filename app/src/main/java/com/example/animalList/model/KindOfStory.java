@@ -9,7 +9,9 @@ public class KindOfStory implements Serializable {
     private Drawable photo;
     private ArrayList<Story> listStory;
 
-    public KindOfStory(String name, Drawable photo, ArrayList<Story> listStory) {
+    public KindOfStory(String name,
+                       Drawable photo,
+                       ArrayList<Story> listStory) {
         this.name = name;
         this.photo = photo;
         this.listStory = listStory;

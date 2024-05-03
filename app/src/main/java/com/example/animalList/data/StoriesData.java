@@ -16,7 +16,7 @@ public class StoriesData {
     private static StoriesData mInstance;
     private ArrayList<KindOfStory> mKindOfStory;
 
-    private static final String[] FILE_NAMES = {
+    private static final String[] NAMES = {
             "Con gái",
             "Con nít",
             "Con trai",
@@ -65,22 +65,31 @@ public class StoriesData {
 
     private ArrayList<KindOfStory> createKindOfStories(Context context) {
         ArrayList<KindOfStory> kindOfStories = new ArrayList<>();
+        int fileCount = 0;
 
-        for (String fileName : FILE_NAMES) {
+        for (String fileName : NAMES) {
             try {
                 // Load the list of stories from the text file
-                ArrayList<Story> listStory = loadListStory(context, fileName);
+                ArrayList<Story> listStory = loadListStory(context, (fileCount+1)+"_text" );
                 // Load the photo for the KindOfStory
-                Drawable photo = loadPhoto(context, fileName);
-                // Create a new KindOfStory instance and add it to the list
-                kindOfStories.add(new KindOfStory(fileName, photo, listStory));
+                Drawable photo = loadPhoto(context, (fileCount+1)+"_photo");
+                // Check if the photo is null
+                if (photo != null) {
+                    // Create a new KindOfStory instance and add it to the list
+                    kindOfStories.add(new KindOfStory(fileName,photo, listStory));
+                } else {
+                    Log.e("StoriesData", "Photo is null for " + fileName);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            fileCount++;
         }
 
         return kindOfStories;
     }
+
 
     private ArrayList<Story> loadListStory(Context context, String fileName) {
         ArrayList<Story> listStory = new ArrayList<>();

@@ -4,15 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.animalList.R;
-import com.example.animalList.fragment.GridAnimalsFragment;
+import com.example.animalList.fragment.ListStoriesFragment;
 import com.example.animalList.model.KindOfStory;
 import com.example.animalList.model.KindOfStoryViewHolder;
 
@@ -45,7 +44,14 @@ public class KindOfStoryAdapter extends RecyclerView.Adapter<KindOfStoryViewHold
         viewHolder.getKindName().setText(currentKindOfStory.getName());
         viewHolder.getKindPhoto().setImageDrawable(currentKindOfStory.getPhoto());
 
-
+        viewHolder.getView().setOnClickListener(v -> {
+            ListStoriesFragment listStoriesFragment = new ListStoriesFragment(currentKindOfStory);
+            AppCompatActivity activity = (AppCompatActivity) v.getContext();
+            activity.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.ln_main, listStoriesFragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
     }
 
     @Override
