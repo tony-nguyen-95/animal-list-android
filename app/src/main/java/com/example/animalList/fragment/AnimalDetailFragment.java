@@ -19,14 +19,14 @@ import androidx.fragment.app.Fragment;
 
 import com.example.animalList.R;
 import com.example.animalList.adapter.DetailViewPagerAdapter;
-import com.example.animalList.data.AnimalsData;
-import com.example.animalList.model.Animal;
+import com.example.animalList.data.StoriesData;
+import com.example.animalList.model.Story;
 
 import java.io.Serializable;
 
 public class AnimalDetailFragment extends Fragment implements Serializable {
-    private static final String ARG_ANIMAL = "animal";
-    private Animal animal;
+    private static final String ARG_ANIMAL = "story";
+    private Story story;
     private DetailViewPagerAdapter detailViewPagerAdapter;
 
     // Private constructor to prevent direct instantiation
@@ -36,10 +36,10 @@ public class AnimalDetailFragment extends Fragment implements Serializable {
         this.detailViewPagerAdapter = adapter;
     }
 
-    public static AnimalDetailFragment newInstance(Animal animal) {
+    public static AnimalDetailFragment newInstance(Story story) {
         AnimalDetailFragment fragment = new AnimalDetailFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_ANIMAL, animal);
+        args.putSerializable(ARG_ANIMAL, story);
         fragment.setArguments(args);
         return fragment;
     }
@@ -48,7 +48,7 @@ public class AnimalDetailFragment extends Fragment implements Serializable {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            animal = (Animal) getArguments().getSerializable(ARG_ANIMAL);
+            story = (Story) getArguments().getSerializable(ARG_ANIMAL);
         }
     }
 
@@ -62,12 +62,12 @@ public class AnimalDetailFragment extends Fragment implements Serializable {
         ImageButton phoneButton = view.findViewById(R.id.phoneButton);
         TextView phoneNumber = view.findViewById(R.id.phoneNumber);
 
-        if (animal != null) {
-            nameTextView.setText(animal.getName());
-            animal.loadImageFromAssets(getContext(), imageDetailView, animal.getImagePath());
-            animal.loadDescriptionFromAssets(getContext(), descriptionTextView,animal.getDescriptionPath());
+        if (story != null) {
+            nameTextView.setText(story.getName());
+            story.loadImageFromAssets(getContext(), imageDetailView, story.getImagePath());
+            story.loadDescriptionFromAssets(getContext(), descriptionTextView, story.getDescriptionPath());
 
-            if (animal.isLiked()) {
+            if (story.isLiked()) {
                 loveButton.setImageResource(R.drawable.ic_heart_filled);
             } else {
                 loveButton.setImageResource(R.drawable.ic_heart);
@@ -76,10 +76,10 @@ public class AnimalDetailFragment extends Fragment implements Serializable {
             loveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    animal.setLiked(!animal.isLiked());
+                    story.setLiked(!story.isLiked());
                     AppCompatActivity compatActivity = (AppCompatActivity) getActivity();
-                    AnimalsData.getInstance(compatActivity).saveLovedState(animal);
-                    if (animal.isLiked()) {
+                    StoriesData.getInstance(compatActivity).saveLovedState(story);
+                    if (story.isLiked()) {
                         loveButton.setImageResource(R.drawable.ic_heart_filled);
                     } else {
                         loveButton.setImageResource(R.drawable.ic_heart);
@@ -87,9 +87,9 @@ public class AnimalDetailFragment extends Fragment implements Serializable {
                 }
             });
 
-            if (animal.getPhoneNumber() != null) {
+            if (story.getPhoneNumber() != null) {
                 phoneNumber.setVisibility(View.VISIBLE);
-                phoneNumber.setText(animal.getPhoneNumber());
+                phoneNumber.setText(story.getPhoneNumber());
             }
 
             phoneButton.setOnClickListener(new View.OnClickListener() {
@@ -101,15 +101,15 @@ public class AnimalDetailFragment extends Fragment implements Serializable {
                     builder.setView(formView);
 
                     ImageView formImageTitle = formView.findViewById(R.id.formImageTitle);
-                    animal.loadImageFromAssets(getContext(),formImageTitle,animal.getIconImagePath());
-//                    formImageTitle.setImageResource(animal.getIconImage());
+                    story.loadImageFromAssets(getContext(),formImageTitle, story.getIconImagePath());
+//                    formImageTitle.setImageResource(story.getIconImage());
 
                     EditText inputField = formView.findViewById(R.id.inputField);
                     Button submitButton = formView.findViewById(R.id.saveButton);
                     Button deleteButton = formView.findViewById(R.id.deleteButton);
 
-                    if (animal.getPhoneNumber() != null) {
-                        inputField.setText(animal.getPhoneNumber());
+                    if (story.getPhoneNumber() != null) {
+                        inputField.setText(story.getPhoneNumber());
                     }
 
                     AlertDialog dialog = builder.create();
@@ -118,8 +118,8 @@ public class AnimalDetailFragment extends Fragment implements Serializable {
                         @Override
                         public void onClick(View v) {
                             String _phoneNumber = inputField.getText().toString();
-                            animal.setPhoneNumber(_phoneNumber);
-                            AnimalsData.getInstance(getContext()).savePhoneNumber(animal.getId(), _phoneNumber);
+                            story.setPhoneNumber(_phoneNumber);
+                            StoriesData.getInstance(getContext()).savePhoneNumber(story.getId(), _phoneNumber);
                             phoneNumber.setText(_phoneNumber);
                             phoneNumber.setVisibility(View.VISIBLE);
                             Toast.makeText(requireContext(), "Phone number saved: " + _phoneNumber, Toast.LENGTH_SHORT).show();
@@ -130,10 +130,10 @@ public class AnimalDetailFragment extends Fragment implements Serializable {
                     deleteButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            animal.setPhoneNumber(null);
+                            story.setPhoneNumber(null);
                             phoneNumber.setText(null);
                             phoneNumber.setVisibility(View.INVISIBLE);
-                            AnimalsData.getInstance(getContext()).removePhoneNumber(animal.getId());
+                            StoriesData.getInstance(getContext()).removePhoneNumber(story.getId());
                             Toast.makeText(requireContext(), "Phone number deleted", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
                         }

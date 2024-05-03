@@ -7,7 +7,7 @@
 
 
 
-    <!-- ImageView for animal image -->
+    <!-- ImageView for story image -->
     <ImageView
         android:id="@+id/animalImageView"
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
         android:scaleType="centerCrop"
         android:contentDescription="@string/animal_detail_image" />
 
-    <!-- RelativeLayout for animal title group -->
+    <!-- RelativeLayout for story title group -->
     <RelativeLayout
         android:id="@+id/animalTitleGroup"
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
         android:paddingTop="16dp"
         tools:ignore="MissingConstraints">
 
-        <!-- TextView for animal name -->
+        <!-- TextView for story name -->
         <TextView
             android:id="@+id/animalNameTextView"
             android:layout_width="wrap_content"
@@ -76,7 +76,7 @@
 
     </RelativeLayout>
 
-    <!-- TextView for animal description -->
+    <!-- TextView for story description -->
     <TextView
         android:id="@+id/descriptionTextView"
         android:layout_width="match_parent"
@@ -85,6 +85,6 @@
         android:layout_marginTop="8dp"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
-        tools:text="Description of the animal..." />
+        tools:text="Description of the story..." />
 
 </RelativeLayout>

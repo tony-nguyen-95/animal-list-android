@@ -5,21 +5,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.animalList.R;
 import com.example.animalList.adapter.DetailViewPagerAdapter;
-import com.example.animalList.model.Animal;
+import com.example.animalList.model.Story;
 
 import java.util.ArrayList;
 public class ViewPagerAdapterFragment extends Fragment {
@@ -28,13 +25,13 @@ public class ViewPagerAdapterFragment extends Fragment {
     private ArrayList<AnimalDetailFragment> animalFragments;
 
     // Create a new instance of ViewPagerAdapterFragment with animalFragments as a parameter
-    public static ViewPagerAdapterFragment newInstance(ArrayList<Animal> animals, int position) {
+    public static ViewPagerAdapterFragment newInstance(ArrayList<Story> stories, int position) {
         // Create a new instance of ViewPagerAdapterFragment
         ViewPagerAdapterFragment fragment = new ViewPagerAdapterFragment();
 
-        // Create a bundle to pass the list of animals
+        // Create a bundle to pass the list of stories
         Bundle args = new Bundle();
-        args.putSerializable("animals", animals);
+        args.putSerializable("stories", stories);
         args.putSerializable("position",position);
 
         // Set the arguments on the fragment
@@ -48,8 +45,8 @@ public class ViewPagerAdapterFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_viewpager_wrapper, container, false);
 
-        // Retrieve the list of animals from the arguments
-        ArrayList<Animal> animals = (ArrayList<Animal>) getArguments().getSerializable("animals");
+        // Retrieve the list of stories from the arguments
+        ArrayList<Story> stories = (ArrayList<Story>) getArguments().getSerializable("stories");
         int position = getArguments().getInt("position", 0);
 
         DetailViewPagerAdapter adapter = new DetailViewPagerAdapter(getChildFragmentManager());
@@ -57,8 +54,8 @@ public class ViewPagerAdapterFragment extends Fragment {
         // Create a list of AnimalDetailFragment instances
         ArrayList<AnimalDetailFragment> animalFragments = new ArrayList<>();
 
-        for (Animal animal : animals) {
-            AnimalDetailFragment fragment = AnimalDetailFragment.newInstance(animal);
+        for (Story story : stories) {
+            AnimalDetailFragment fragment = AnimalDetailFragment.newInstance(story);
             adapter.addFragment(fragment);
             fragment.setDetailViewPagerAdapter(adapter);
         }
@@ -86,7 +83,7 @@ public class ViewPagerAdapterFragment extends Fragment {
                 appCompatActivity.getSupportFragmentManager().popBackStack();
 
                 // Re-render grid list
-                GridAnimalsFragment gridAnimalsFragment = GridAnimalsFragment.newInstance(animals);
+                GridAnimalsFragment gridAnimalsFragment = GridAnimalsFragment.newInstance(stories);
                 FragmentTransaction transaction = appCompatActivity.getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_grid_animals, gridAnimalsFragment);
                 transaction.addToBackStack(null);

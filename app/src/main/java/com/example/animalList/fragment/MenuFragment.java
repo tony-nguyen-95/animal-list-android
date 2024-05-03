@@ -18,10 +18,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.animalList.R;
-import com.example.animalList.adapter.KindOfAnimalAdapter;
-import com.example.animalList.data.AnimalsData;
-import com.example.animalList.model.Animal;
-import com.example.animalList.model.KindOfAnimal;
+import com.example.animalList.adapter.KindOfStoryAdapter;
+import com.example.animalList.data.StoriesData;
+import com.example.animalList.model.KindOfStory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,26 +72,23 @@ public class MenuFragment extends Fragment {
         }
 
 
-        List<KindOfAnimal> list = new ArrayList<>();
+        List<KindOfStory> list = new ArrayList<>();
         list = getDataKindOfAnimal();
 
         // Find the RecyclerView within the nav header layout
         RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
 
         // Set up RecyclerView
-        KindOfAnimalAdapter adapter = new KindOfAnimalAdapter(list,appCompatActivity);
+        KindOfStoryAdapter adapter = new KindOfStoryAdapter(list,appCompatActivity);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 
     }
 
-    private List<KindOfAnimal> getDataKindOfAnimal()
+    private List<KindOfStory> getDataKindOfAnimal()
     {
-        List<KindOfAnimal> list = new ArrayList<>();
+        List<KindOfStory> list = StoriesData.getInstance(mContext).getKindOfStory();
 
-        list.add(new KindOfAnimal("Seas", R.drawable.animal_oceans, AnimalsData.getInstance(mContext).getSeaAnimals()));
-        list.add(new KindOfAnimal("Mammals", R.drawable.animal_mammals, AnimalsData.getInstance(mContext).getMammals()));
-        list.add(new KindOfAnimal("Birds", R.drawable.animals_birds, AnimalsData.getInstance(mContext).getBirds()));
 
         return list;
     }

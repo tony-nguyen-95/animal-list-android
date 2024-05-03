@@ -1,19 +1,5 @@
 <resources>
-    <string name="app_name">AnimalList</string>
-    <string name="animal_title">animal_title</string>
-    <string name="love">Love</string>
-    <string name="back_to_list">Back to List</string>
-    <string name="love_button">Love</string>
-    <string name="show_custom_toast">Show Custom Toast</string>
-    <string name="heading">Test Fragment</string>
-    <string name="fragment1_button">Show Fragment 1</string>
-    <string name="fragment2_button">Show Fragment2</string>\
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="fragment1_text">First Fragment</string>
-    <string name="nav_open">Open</string>
-    <string name="nav_close">Close</string>
-    <string name="animal_detail_image">animal detail image</string>
-    <string name="phone_button">Phone</string>
-    <string name="enter_phone">Phone</string>
-    <string name="icon_animal">Icon Animal</string>
+    <string name="app_name">TruyenCuoi</string>
+    <string name="txt_congai">Con gái</string>
+    <string name="txt_story">Vừa đúng vừa sai</string>
 </resources>

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,23 +13,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.animalList.R;
 import com.example.animalList.adapter.GridAnimalsAdapter;
-import com.example.animalList.model.Animal;
-import com.example.animalList.model.KindOfAnimal;
+import com.example.animalList.model.Story;
 
 import java.util.ArrayList;
 
 public class GridAnimalsFragment extends Fragment {
 
     private static final String ARG_KIND_OF_ANIMAL = "kind_of_animal";
-    private ArrayList<Animal> animals;
+    private ArrayList<Story> stories;
 
     // Private constructor to prevent direct instantiation
     private GridAnimalsFragment() {}
 
-    public static GridAnimalsFragment newInstance(ArrayList<Animal> animals) {
+    public static GridAnimalsFragment newInstance(ArrayList<Story> stories) {
         GridAnimalsFragment fragment = new GridAnimalsFragment();
         Bundle args = new Bundle();
-        args.putSerializable("animals", animals);
+        args.putSerializable("stories", stories);
         fragment.setArguments(args);
         return fragment;
     }
@@ -41,7 +39,7 @@ public class GridAnimalsFragment extends Fragment {
 
         // Retrieve arguments and initialize kindOfAnimal
         if (getArguments() != null) {
-            animals = (ArrayList<Animal>) getArguments().getSerializable("animals");
+            stories = (ArrayList<Story>) getArguments().getSerializable("stories");
         }
     }
 
@@ -57,7 +55,7 @@ public class GridAnimalsFragment extends Fragment {
         recyclerView.setLayoutManager(gridLayoutManager);
 
         // Create an instance of your AnimalAdapter
-        GridAnimalsAdapter animalAdapter = new GridAnimalsAdapter(getContext(),animals);
+        GridAnimalsAdapter animalAdapter = new GridAnimalsAdapter(getContext(), stories);
 
         // Set the adapter on the RecyclerView
         recyclerView.setAdapter(animalAdapter);

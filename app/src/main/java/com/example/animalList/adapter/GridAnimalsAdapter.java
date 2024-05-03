@@ -13,36 +13,36 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.animalList.R;
 import com.example.animalList.fragment.ViewPagerAdapterFragment;
-import com.example.animalList.model.Animal;
-import com.example.animalList.model.AnimalViewHolder;
+import com.example.animalList.model.Story;
+import com.example.animalList.model.StoryViewHolder;
 
 import java.util.ArrayList;
 
-public class GridAnimalsAdapter extends RecyclerView.Adapter<AnimalViewHolder> {
+public class GridAnimalsAdapter extends RecyclerView.Adapter<StoryViewHolder> {
 
     private Context mContext;
-    private ArrayList<Animal> mAnimalList;
+    private ArrayList<Story> mStoryList;
 
-    public GridAnimalsAdapter(Context context, ArrayList<Animal> animalList) {
+    public GridAnimalsAdapter(Context context, ArrayList<Story> storyList) {
         this.mContext = context;
-        this.mAnimalList = animalList;
+        this.mStoryList = storyList;
     }
 
     @NonNull
     @Override
-    public AnimalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public StoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Inflate the layout for the animal item
         View view = LayoutInflater.from(mContext).inflate(R.layout.grid_animal_item, parent, false);
-        return new AnimalViewHolder(view);
+        return new StoryViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AnimalViewHolder holder, int position) {
-        // Bind the data for the animal at the given position
-        Animal animal = mAnimalList.get(position);
-        holder.bind(animal);
+    public void onBindViewHolder(@NonNull StoryViewHolder holder, int position) {
+        // Bind the data for the story at the given position
+        Story story = mStoryList.get(position);
+        holder.bind(story);
 
-        // Set the click listener for the animal item
+        // Set the click listener for the story item
         holder.itemView.setOnClickListener(v -> {
             // Create an AlphaAnimation instance to animate the transparency
             AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.2f);
@@ -55,7 +55,7 @@ public class GridAnimalsAdapter extends RecyclerView.Adapter<AnimalViewHolder> {
             AppCompatActivity appActivity = (AppCompatActivity) mContext;
 
             // Replace ViewPagerAdapterFragment
-            ViewPagerAdapterFragment viewPagerAdapterFragment = ViewPagerAdapterFragment.newInstance(mAnimalList, position);
+            ViewPagerAdapterFragment viewPagerAdapterFragment = ViewPagerAdapterFragment.newInstance(mStoryList, position);
 
             // Begin the fragment transaction
             FragmentTransaction transaction = appActivity.getSupportFragmentManager().beginTransaction();
@@ -73,6 +73,6 @@ public class GridAnimalsAdapter extends RecyclerView.Adapter<AnimalViewHolder> {
 
     @Override
     public int getItemCount() {
-        return mAnimalList.size();
+        return mStoryList.size();
     }
 }
