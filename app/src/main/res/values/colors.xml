@@ -9,5 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="greenMid">#478942</color>
     <color name="greenLight">#62BC5B</color>
-    <color name="greenSuperLight">#EFFFEE</color>
+
+    <color name="yellow">#FFFF00</color>
 </resources>

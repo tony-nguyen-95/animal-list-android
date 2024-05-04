@@ -2,7 +2,7 @@
 
     <!-- Base application theme. -->
 
-    <style name="Theme.Demo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.MyMusic" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <!-- Primary brand color. -->
 
