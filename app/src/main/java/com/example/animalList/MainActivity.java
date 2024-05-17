@@ -1,26 +1,21 @@
 package com.example.animalList;
-
 import android.Manifest;
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
 
 import android.content.pm.PackageManager;
 
-import android.database.Cursor;
-
-import android.media.MediaPlayer;
+import android.net.Uri;
 
 import android.os.Bundle;
 
-import android.provider.MediaStore;
-
 import android.view.View;
 
-import android.widget.ImageView;
+import android.widget.Button;
 
-import android.widget.SeekBar;
+import android.widget.EditText;
 
-import android.widget.TextView;
+import android.widget.ProgressBar;
 
 import android.widget.Toast;
 
@@ -28,55 +23,33 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-
-import androidx.recyclerview.widget.RecyclerView;
-
-
-import com.example.animalList.adapter.MusicAdapter;
-import com.example.animalList.model.Song;
-
-import java.text.SimpleDateFormat;
-
-import java.util.ArrayList;
-
-import java.util.Date;
+import androidx.core.content.FileProvider;
 
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
+import java.io.File;
 
-    private static final int LEVEL_PAUSE = 0;
+import java.io.FileOutputStream;
 
-    private static final int LEVEL_PLAY = 1;
+import java.io.InputStream;
 
-    private static final MediaPlayer player = new MediaPlayer();
+import java.net.URL;
 
-    private static final int STATE_IDE = 1;
-
-    private static final int STATE_PLAYING = 2;
-
-    private static final int STATE_PAUSED = 3;
-
-    private final ArrayList<Song> listSong = new ArrayList<>();
-
-    private TextView tvName, tvAlbum, tvTime;
-
-    private SeekBar seekBar;
-
-    private ImageView ivPlay;
+import java.net.URLConnection;
 
 
 
-    private int index;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Song songEntity;
+    private EditText edtLink;
 
-    private Thread thread;
+    private ProgressBar progressBar;
 
-    private int state = STATE_IDE;
+    private int size = 0;
 
-    private String totalTime;
+    private Button btOpen;
+
+    private String savePath;
 
 
 
@@ -96,120 +69,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initViews() {
 
-        ivPlay = findViewById(R.id.iv_play);
+        progressBar = findViewById(R.id.progress_bar);
 
-        ivPlay.setOnClickListener(this);
+        edtLink = findViewById(R.id.edt_link);
 
-        findViewById(R.id.iv_back).setOnClickListener(this);
+        findViewById(R.id.bt_download).setOnClickListener(this);
 
-        findViewById(R.id.iv_next).setOnClickListener(this);
-
-        tvName = findViewById(R.id.tv_name);
-
-        tvAlbum = findViewById(R.id.tv_album);
-
-        tvTime = findViewById(R.id.tv_time);
-
-        seekBar = findViewById(R.id.seekbar);
-
-        seekBar.setOnSeekBarChangeListener(this);
-
-
-
-        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-
-            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 101);
-
-            return;
-
-        }
-
-        loadingListSongOffline();
-
-    }
-
-
-
-    @Override
-
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-            loadingListSongOffline();
-
-        } else {
-
-            Toast.makeText(this, R.string.txt_alert, Toast.LENGTH_SHORT).show();
-
-            finish();
-
-        }
-
-    }
-
-
-
-
-
-    private void loadingListSongOffline() {
-        //ContentResolver cho phép truy cập đến tài nguyên của ứng dụng thông qua 1 đường dẫn uri
-
-        Cursor c = getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-
-                null, null, null, null);
-
-        if (c != null) {
-
-            c.moveToFirst();
-
-            listSong.clear();
-
-            int titleIndex = c.getColumnIndex(MediaStore.Audio.Media.TITLE);
-            int pathIndex = c.getColumnIndex(MediaStore.Audio.Media.DATA);
-            int albumIndex = -1;
-
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-                albumIndex = c.getColumnIndex(MediaStore.Audio.Media.ALBUM_ARTIST);
-            }
-
-            while (!c.isAfterLast()) {
-                String name = (titleIndex != -1) ? c.getString(titleIndex) : "Unknown Title";
-                String path = (pathIndex != -1) ? c.getString(pathIndex) : "Unknown Path";
-                String album = (albumIndex != -1) ? c.getString(albumIndex) : "N/A";
-
-                listSong.add(new Song(name, path, album));
-
-                c.moveToNext();
-            }
-
-            c.close();
-
-        }
-
-        RecyclerView rv = findViewById(R.id.rv_song);
-
-        rv.setLayoutManager(new LinearLayoutManager(this));
-
-        rv.setAdapter(new MusicAdapter(listSong, this));
-
-        play();
-
-        playPause();
-
-    }
-
-
-
-    public void playSong(Song songEntity) {
-
-        index = listSong.indexOf(songEntity);
-
-        this.songEntity = songEntity;
-
-        play();
+        btOpen = findViewById(R.id.bt_open);
+        btOpen.setEnabled(false);
+        btOpen.setOnClickListener(this);
 
     }
 
@@ -219,81 +87,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onClick(View v) {
 
-        if (v.getId() == R.id.iv_play) {
-
-            playPause();
-
-        } else if (v.getId() == R.id.iv_next) {
-
-            next();
-
-        } else if (v.getId() == R.id.iv_back) {
-
-            back();
-
-        }
-
-    }
+        if (!checkPermission()) return;
 
 
 
-    private void back() {
+        if (v.getId() == R.id.bt_download) {
 
-        if (index == 0) {
+            downloadFile(edtLink.getText().toString());
 
-            index = listSong.size() - 1;
+        } else if (v.getId() == R.id.bt_open) {
 
-        } else {
-
-            index--;
-
-        }
-
-        play();
-
-    }
-
-
-
-    private void next() {
-
-        if (index >= listSong.size()) {
-
-            index = 0;
-
-        } else {
-
-            index++;
-
-        }
-
-        play();
-
-    }
-
-
-
-    private void playPause() {
-
-        if (state == STATE_PLAYING && player.isPlaying()) {
-
-            player.pause();
-
-            ivPlay.setImageLevel(LEVEL_PAUSE);
-
-            state = STATE_PAUSED;
-
-        } else if (state == STATE_PAUSED) {
-
-            player.start();
-
-            state = STATE_PLAYING;
-
-            ivPlay.setImageLevel(LEVEL_PLAY);
-
-        } else {
-
-            play();
+            openFile();
 
         }
 
@@ -301,149 +105,119 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-    private void play() {
+    private boolean checkPermission() {
 
-        songEntity = listSong.get(index);
+        boolean isAllow = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
 
-        tvName.setText(songEntity.getName());
+        if (!isAllow) {
 
-        tvAlbum.setText(songEntity.getAlbum());
+            requestPermissions(new String[]{
 
-        player.reset();
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
 
-        try {
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
 
-            player.setDataSource(songEntity.getPath());
-
-            player.prepare();
-
-            player.start();
-
-            ivPlay.setImageLevel(LEVEL_PLAY);
-
-            state = STATE_PLAYING;
-
-            totalTime = getTime(player.getDuration());
-
-            seekBar.setMax(player.getDuration());
-
-            if (thread == null) {
-
-                startLooping();
-
-            }
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
+            }, 101);
 
         }
+
+        return isAllow;
 
     }
 
 
 
-    private void startLooping() {
+    private void openFile() {
 
-        thread = new Thread() {
+        if (savePath == null || savePath.isEmpty()) return;
+
+        File file = new File(savePath);
+
+        Uri uri = FileProvider.getUriForFile(this, getPackageName() + ".provider", file);
+
+        String mime = getContentResolver().getType(uri);
+
+
+
+        Intent intent = new Intent();
+
+        intent.setAction(Intent.ACTION_VIEW);
+
+        intent.setDataAndType(uri, mime);
+        //FRAG_GRANT_READ_URI_PERMISSION là để khai báo thêm cờ báo hiệu đã được sự đồng ý để
+        //đọc dữ liệu của đường dẫn uri
+
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        startActivity(intent);
+
+    }
+
+
+
+    private void downloadFile(String link) {
+
+        new Thread() {
 
             @Override
 
             public void run() {
 
-                while (true) {
+                try {
 
-                    try {
+                    URLConnection conn = new URL(link).openConnection();
 
-                        Thread.sleep(200);
+                    InputStream in = conn.getInputStream();
 
-                    } catch (Exception e) {
+                    savePath = getExternalFilesDir(null).getPath() + "/" + new File(link).getName();
 
-                        return;
+                    FileOutputStream out = new FileOutputStream(new File(savePath));
+
+                    byte[] buff = new byte[1024];
+
+                    int len = in.read(buff);
+
+                    runOnUiThread(() -> {
+
+                        progressBar.setMax(conn.getContentLength());
+
+                        progressBar.setProgress(0);
+
+                        btOpen.setEnabled(false);
+
+                    });
+
+                    size = 0;
+
+                    while (len > 0) {
+
+                        out.write(buff, 0, len);
+
+                        size += len;
+
+                        runOnUiThread(() -> progressBar.setProgress(size));
+
+                        len = in.read(buff);
 
                     }
 
-                    runOnUiThread(() -> updateTime());
+                    out.close();
+
+                    in.close();
+
+                    runOnUiThread(() -> btOpen.setEnabled(true));
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+
+                    runOnUiThread(() -> Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
 
                 }
 
             }
 
-        };
-
-        thread.start();
-
-    }
-
-
-
-    private void updateTime() {
-
-        if (state == STATE_PLAYING || state == STATE_PAUSED) {
-
-            int time = player.getCurrentPosition();
-
-            tvTime.setText(String.format("%s/%s", getTime(time), totalTime));
-
-            seekBar.setProgress(time);
-
-        }
-
-    }
-
-
-
-    @SuppressLint("SimpleDateFormat")
-
-    private String getTime(int time) {
-
-        return new SimpleDateFormat("mm:ss").format(new Date(time));
-
-    }
-
-
-
-    @Override
-
-    protected void onDestroy() {
-
-        super.onDestroy();
-
-        thread.interrupt();
-
-    }
-
-
-
-    @Override
-
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-
-
-    }
-
-
-
-    @Override
-
-    public void onStartTrackingTouch(SeekBar seekBar) {
-
-
-
-    }
-
-
-
-    @Override
-
-    public void onStopTrackingTouch(SeekBar seekBar) {
-
-        if (state == STATE_PLAYING || state == STATE_PAUSED) {
-
-            player.seekTo(seekBar.getProgress());
-
-        }
+        }.start();
 
     }
 
